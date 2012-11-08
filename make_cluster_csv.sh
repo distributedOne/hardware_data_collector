@@ -6,7 +6,9 @@ echo "MACHINE, TEST, VALUE";
 
 for machine in ${machines};
 do
-	rootfolder="ceph_cluster_hardware_results/hw_data_results_${machine}/results_${machine}/"
+	rootfolder="ceph_cluster_hardware_results/hw_data_results_${machine}/results_${machine}"
+	disks=`ls -1 ${rootfolder}/disks/*_model.txt`
+
 
 	echo -n "${machine},"
 	echo -n "cpu_model,"
@@ -17,6 +19,57 @@ do
 	echo -n "local_cpulist,"
 	echo -n "\""; cat ${rootfolder}/cpu/local_cpulist.txt | tr -d "\n"; echo -n "\"";
 	echo;
+
+	for disk in ${disks};
+	do
+		curdisk=`basename $disk | awk -F'_model.txt' {'print $1'}`;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_model,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_model.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_queue_hw_sector_size,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_queue_hw_sector_size.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_queue_max_hw_sectors_kb,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_queue_max_hw_sectors_kb.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_queue_max_sectors_kb,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_queue_max_sectors_kb.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_queue_nomerges,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_queue_nomerges.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_queue_nr_requests,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_queue_nr_requests.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_queue_read_ahead_kb,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_queue_read_ahead_kb.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_queue_rq_affinity,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_queue_rq_affinity.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+		echo -n "${machine},"
+		echo -n "${curdisk}_queue_scheduler,"
+		echo -n "\""; cat ${rootfolder}/disks/${curdisk}_queue_scheduler.txt | tr -d "\n"; echo -n "\"";
+		echo;
+
+	done;
 
 	echo -n "${machine},"
 	echo -n "total_memory,"
