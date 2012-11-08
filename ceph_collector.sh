@@ -8,7 +8,7 @@ echo "Transferring hardware data collection script to all nodes..."
 for host in ${hosts};
 do
 	echo "Transferring script to $host."
-	scp collect_hw_data.sh root@$host:/root/collect_hw_data.sh &
+	scp collect_hardware_data.sh root@$host:/root/collect_hardware_data.sh &
 done;
 wait;
 echo "All transfers completed."
@@ -17,7 +17,7 @@ echo "Starting hardware data collection on all nodes..."
 for host in ${hosts};
 do
 	echo "Starting data collection on $host."
-	ssh root@$host "chmod +x /root/collect_hw_data.sh && /bin/bash /root/collect_hw_data.sh > /root/collect_hw_data_$host.txt && mv /root/collect_hw_data_$host.txt /root/results_$host/collect_hw_data_$host.txt" &
+	ssh root@$host "chmod +x /root/collect_hardware_data.sh && /bin/bash /root/collect_hardware_data.sh > /root/collect_hw_data_$host.txt && mv /root/collect_hw_data_$host.txt /root/results_$host/collect_hw_data_$host.txt" &
 done;
 wait;
 echo "Collection completed."
@@ -36,7 +36,7 @@ do
 	echo "Cleanup starting on $host."
 	ssh root@$host rm /root/hw_data_results_$host.tar.gz &
 	ssh root@$host rm -rf /root/results_$host/ &
-	ssh root@$host rm /root/collect_hw_data.sh &
+	ssh root@$host rm /root/collect_hardware_data.sh &
 done;
 wait;
 echo "Cleanup completed."
