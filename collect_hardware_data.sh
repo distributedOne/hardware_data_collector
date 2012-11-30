@@ -151,6 +151,20 @@ echo "------------"
 ceph -v > ${resultfolder}/ceph/version.txt
 cat ${resultfolder}/ceph/version.txt;
 
+for i in /var/run/ceph/ceph-mon.*.asok;
+do
+        ceph --admin-daemon=$i config show * > ${resultfolder}/ceph/config_show.txt;
+done;
+
+cat /etc/ceph/ceph.conf > ${resultfolder}/ceph/ceph.conf;
+ceph osd getmap > $resultfolder/ceph/osd.map;
+ceph osd getcrushmap -o /tmp/crushmap;
+crushtool -d /tmp/crushmap > $resultfolder/ceph/crushmap.txt;
+ceph osd tree > $resultfolder/ceph/osd_tree.txt;
+ceph pg dump > ${resultfolder}/ceph/pg_dump.txt;
+ceph osd dump > ${resultfolder}/ceph/osd_dump.txt;
+ceph mon dump > ${resultfolder}/ceph/mon_dump.txt;
+
 echo;
 
 echo "------------"
