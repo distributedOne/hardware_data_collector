@@ -2,7 +2,7 @@
 
 #set -e
 
-hostname=`hostname`;
+hostname=`hostname -s`;
 
 resultfolder="results_"${hostname};
 
