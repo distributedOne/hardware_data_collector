@@ -36,7 +36,7 @@ cat ${resultfolder}/disks/mounts.txt;
 
 echo;
 
-for disk in `df -h | grep osd | awk {'print $1'} | grep -v 'Filesystem' | awk -F/ {'print $3'}`;
+for disk in `cat /proc/partitions | grep -w sd[a-z] | awk '{print $4}'`;
 do
 
 	curdisk=${disk:0:3};
